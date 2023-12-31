@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+    
+    <title>Frontend Mentor | Age calculator app</title>
+
+    <link rel="stylesheet" href="./assets/css/style.css">
+    </head>
+<body>
+    <div class="calculator">
+        <div class="calculator__content">
+            <form class="date">
+                <div class="date__field">
+                    <label class="date__label" for="day">Day</label>
+                    <input class="date__input" id="day" name="day" type="text" placeholder="DD" maxlength="2">
+                    <div class="date__error"></div>
+                </div>
+
+                <div class="date__field">
+                    <label class="date__label" for="month">Month</label>
+                    <input class="date__input" id="month" name="month" type="text" placeholder="MM" maxlength="2">
+                    <div class="date__error"></div>
+                </div>
+
+                <div class="date__field">
+                    <label class="date__label" for="year">Year</label>
+                    <input class="date__input" id="year" name="year" type="text" placeholder="YYYY" maxlength="4">
+                    <div class="date__error"></div>
+                </div>
+
+
+                <input class="date__submit" type="submit" aria-label="enviar" value="">
+            </form>
+            
+            <div class="calculator__description">
+                <div>
+                    <p class="calculator__text">
+                        <span class="calculator__text--span">--</span> years
+                    </p>
+                    <p class="calculator__text">
+                        <span class="calculator__text--span">--</span> months
+                    </p>
+                    <p class="calculator__text">
+                        <span class="calculator__text--span">--</span> days
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <img src="./design/desktop-error-empty.jpg" alt="">
+    <img src="./design/desktop-error-invalid.jpg" alt="">
+    <img src="./design/desktop-error-whole-form.jpg" alt="">
+    <div class="attribution">
+        Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+        Coded by <a href="#">John Saavedra</a>.
+    </div>
+
+    <script src="./assets/js/index.js"></script>
+</body>
+</html>
