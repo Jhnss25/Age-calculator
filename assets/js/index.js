@@ -58,14 +58,15 @@ const validateYear = (year) => {
     deleteError(inputYear);
 }
 
-const validateMonth = (month) => {    
+const validateMonth = (month, year) => {    
     const currentMonth = new Date().getMonth() + 1;
+    const currentYear = new Date().getFullYear();
 
     if (isNaN(month)) {
         return createError(inputMonth, 'Enter a valid year');
     }
 
-    if (month > currentMonth || month <= 0 || month > 12) {
+    if ((month > currentMonth && year == currentYear) || month <= 0 || month > 12) {
         return createError(inputMonth, 'Must be a valid month');
     }
     
@@ -112,7 +113,7 @@ const handleSubmit = e => {
 
     
     validateYear(year);
-    validateMonth(month);
+    validateMonth(month, year);
     validateDay({...valueInputs});
    
     const existeError = document.querySelector('.date__error');
