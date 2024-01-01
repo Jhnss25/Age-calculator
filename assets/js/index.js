@@ -1,18 +1,13 @@
 const inputs = document.querySelectorAll('.date__input');
 const inputSubmit = document.querySelector('.date');
+const inputYear = document.querySelector('#year');
+const inputMonth = document.querySelector('#month');
+const inputDay = document.querySelector('#day');
+
 const valueInputs = {
-    day: {
-        value: '',
-        error: false
-    },
-    month: {
-        value: '',
-        error: false
-    },
-    year: {
-        value: '',
-        error: false
-    },
+    day: '',
+    month: '',
+    year: ''
 };
 
 const clearAlert = (alert) => {
@@ -43,9 +38,7 @@ const deleteError = (input) => {
 }
 
 const validateNotEmpty = (input) => {
-    console.log(valueInputs[input.name])
-    console.log(input.name)
-    if (valueInputs[input.name].value === '') {
+    if (valueInputs[input.name] === '') {
         createError(input, 'The field is required');
     } else {
         deleteError(input);
@@ -53,105 +46,96 @@ const validateNotEmpty = (input) => {
 }
 
 const validateYear = (year) => {
-    const inputYear = document.querySelector('#year');
     const currentYear = new Date().getFullYear();
     
-    console.log(year)
     if (isNaN(year)) {
-        valueInputs.year.error = true;
         return createError(inputYear, 'Enter a valid year')
     };
     if (year > currentYear) {
-        valueInputs.year.error = true;
         return createError(inputYear, 'Must be in the past');
     }
 
     deleteError(inputYear);
-    valueInputs.year.error = false;
 }
 
 const validateMonth = (month) => {    
-    const inputMonth = document.querySelector('#month');
     const currentMonth = new Date().getMonth() + 1;
 
     if (isNaN(month)) {
-        valueInputs.month.error = true;
         return createError(inputMonth, 'Enter a valid year');
     }
 
     if (month > currentMonth || month <= 0 || month > 12) {
-        valueInputs.month.error = true;
         return createError(inputMonth, 'Must be a valid month');
     }
     
     deleteError(inputMonth);
-    valueInputs.month.error = false;
 }
 
 const validateDay = ({day, month, year}) => {
-    const inputDay = document.querySelector('#day');
-    
-    const daysMonths = new Date(year.value || 12, month.value || 2023, 0).getDate();
 
-    if (!(day.value > 0 && day.value <= daysMonths)) {
-        valueInputs.day.error = true;
+    if (isNaN(month)) month = new Date().getMonth();
+    if (isNaN(year)) year = new Date().getFullYear();
+    
+    const daysMonths = new Date(year, month, 0).getDate();
+
+    if (!(day > 0 && day <= daysMonths)) {
         return createError(inputDay, 'Must be a valid day');
     }
     
     deleteError(inputDay);
-    valueInputs.day.error = false;
+}
+
+const guionesTextoSpan = (dato) => {
+    years.textContent = dato;
+    months.textContent = dato;
+    days.textContent = dato;
 }
 
 const handleInput = e => {
-    valueInputs[e.target.name].value = e.target.value;
+    valueInputs[e.target.name] = e.target.value.padStart(2, '0');
 }
 
 const handleSubmit = e => {
     e.preventDefault();
 
-    
     for (let input of inputs) {
         validateNotEmpty(input);
     }
 
-    const { year, month, day} = valueInputs;
+    if (Object.values(valueInputs).some(value => value === '')) {
+        guionesTextoSpan('--');
+        return
+    };
+
+    const { year, month, day } = valueInputs;
+
     
-    validateYear(year.value);
-    validateMonth(month.value);
+    validateYear(year);
+    validateMonth(month);
     validateDay({...valueInputs});
-
-    console.log(valueInputs)
-    console.log(year.error)
-    console.log(month.error)
-    console.log(day.error)
    
-    console.warn('----------------');
+    const existeError = document.querySelector('.date__error');
+    if (existeError) {
+        guionesTextoSpan('--');
+        return
+    };
 
-    if (!year.error || !month.error || !day.error || Object.values(valueInputs).some(valueInput => valueInput.value === '')) {
-        console.log(year.error)
-        console.log(month.error)
-        console.log(day.error)
-        console.log(Object.values(valueInputs).some(valueInput => valueInput.value === ''))
-        console.log('No pase la validación');
-        return;
-    }
+    const years = document.querySelector('#years');
+    const months = document.querySelector('#months');
+    const days = document.querySelector('#days');
 
-    
+    years.textContent = year;
+    months.textContent = month;
+    days.textContent = day;
 
-    console.log('Passe la Validacion');
+    inputYear.value = ''
+    inputMonth.value = ''
+    inputDay.value = ''
 
-    return
-
-    if (validateDay(valueInputs.year)) {
-
-    }
-    if (validateDay(valueInputs)) {
-        
-    }
-    
-
-    console.log('hola')
-
+    valueInputs.year = '';
+    valueInputs.month = '';
+    valueInputs.day = '';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
